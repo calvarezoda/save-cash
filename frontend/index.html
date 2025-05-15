@@ -1,0 +1,97 @@
+<!-- frontend/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save Cash - Send and Recover your money</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- Header Fijo -->
+  <header class="fixed-header">
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Logo Save Cash" class="logo-img" />
+    </div>
+
+    <nav class="fixed-nav">
+      <a href="#enviar">Send Money</a>
+      <a href="#recuperar">Recover Funds</a>
+      <a href="#retiros">Withdraw Methods</a>
+    </nav>
+  </header>
+
+  <!-- Widget de Google Translate -->
+  <div id="google_translate_element" style="margin: 5rem auto 1rem; text-align: center;"></div>
+
+  <script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'es,en,fr,pt,de,it', // Idiomas permitidos
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+  </script>
+
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <section class="hero">
+    <h1>Send and recover your money from anywhere in the world</h1>
+    <p>No barriers, no restrictions, no lost funds</p>
+    <button class="btn-start" onclick="window.location.href='#enviar'">Get Started</button>
+  </section>
+
+  <section id="enviar" class="form-section">
+    <h2>Send Money</h2>
+    <form id="sendForm">
+      <input type="text" placeholder="Sender's Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="number" placeholder="Amount to send" required />
+      <select>
+        <option value="">Select currency</option>
+        <option value="USD">Dollar (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="BTC">Cryptocurrency (BTC)</option>
+        <option value="USDT">Tether (USDT)</option>
+      </select>
+      <textarea placeholder="Destination address or withdrawal method"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <section id="recuperar" class="form-section">
+    <h2>Recuperar Fondos Atascados</h2>
+    <form id="recoveryForm">
+      <input type="text" placeholder="Tu nombre completo" required />
+      <input type="email" placeholder="Tu correo" required />
+      <input type="text" placeholder="ID de transacción o hash" />
+      <textarea placeholder="Describe qué pasó con tu dinero"></textarea>
+      <button type="submit">Reportar fondos atascados</button>
+    </form>
+  </section>
+
+  <section id="retiros" class="info-section">
+    <h2>Métodos de Retiro Disponibles</h2>
+    <ul>
+      <li>Transferencia bancaria internacional</li>
+      <li>Tarjeta prepaga virtual</li>
+      <li>Western Union</li>
+      <li>Criptomonedas (BTC, USDT)</li>
+    </ul>
+    <p><strong>¿Cómo realizar un retiro?</strong></p>
+    <p>Después de enviar o recuperar fondos, haz clic en “Solicitar retiro” y completa tus datos.</p>
+    <button onclick="alert('Pronto tendrás acceso directo a esta función')">Solicitar Retiro</button>
+  </section>
+
+  <footer>
+    <p>© 2025 Save Cash – Todos los derechos reservados</p>
+    <p>Para conectar con el sistema administrador, haz clic <a href="admin/">aquí</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

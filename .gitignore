@@ -1,0 +1,18 @@
+# Node.js .gitignore
+
+# Carpetas ignoradas
+node_modules/
+npm-debug.log
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos del sistema
+.DS_Store
+.env
