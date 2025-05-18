@@ -2,53 +2,47 @@
 
 const express = require('express');
 const router = express.Router();
-const Transaction = require('../models/Transaction');
-const { sendEmail } = require('../utils/notifications');
+const mongoose = require('mongoose');
 
-// Registrar una nueva transacción
-router.post('/transactions', async (req, res) => {
-  const { userId, amount, currency, type, status } = req.body;
-
-  try {
-    const newTransaction = new Transaction({
-      userId,
-      amount,
-      currency,
-      type,
-      status
-    });
-
-    await newTransaction.save();
-
-    // ✉️ Enviar notificación al admin por correo
-    await sendEmail(
-      process.env.ADMIN_EMAIL,
-      `Nueva transacción: ${type}`,
-      `Se ha registrado una nueva transacción:\n\nTipo: ${type}\nUsuario ID: ${userId}\nMonto: ${amount} ${currency}\nEstado: ${status || 'pendiente'}`
-    );
-
-    res.status(201).json({ message: 'Transacción creada exitosamente' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+// Modelo de transacción básico
+const Transaction = mongoose.model('Transaction', new mongoose.Schema({
+  userId: String,
+  amount: Number,
+  currency: String,
+  type: String, // 'send' o 'recovery'
+  status: {
+    type: String,
+    default: 'pending'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
+}));
+
+// Confirmar descuento antes de operar
+router.post('/confirm-discount', async (req, res) => {
+  const { amount, currency } = req.body;
+
+  if (!amount || !currency) {
+    return res.status(400).json({ error: 'Faltan datos de monto o moneda' });
+  }
+
+  const discount = amount * 0.02; // 2% comisión
+  const finalAmount = amount - discount;
+
+  res.json({
+    message: `Confirmado envío de fondos`,
+    discount: discount.toFixed(2),
+    finalAmount: finalAmount.toFixed(2),
+    currency
+  });
 });
 
-// Obtener todas las transacciones
-router.get('/transactions', async (req, res) => {
+// Registrar una transacción básica
+router.get('/', async (req, res) => {
   try {
-    const transactions = await Transaction.find().populate('userId', 'name email');
-    res.json(transactions);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Obtener transacciones por usuario
-router.get('/users/:userId/transactions', async (req, res) => {
-  const { userId } = req.params;
-
-  try {
-    const transactions = await Transaction.find({ userId }).sort({ createdAt: -1 });
+    const transactions = await Transaction.find();
     res.json(transactions);
   } catch (error) {
     res.status(500).json({ error: error.message });
