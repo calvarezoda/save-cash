@@ -1,10 +1,10 @@
 {
   "name": "save-cash",
   "version": "1.0.0",
-  "description": "Plataforma de envío y recuperación de dinero desde Cuba",
-  "main": "backend/server.js",
+  "description": "Plataforma para enviar y recuperar dinero desde Cuba",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
